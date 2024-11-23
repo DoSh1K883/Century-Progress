@@ -1,0 +1,12 @@
+{
+  "name": "cp",
+  "displayName": "Century Progress",
+  "author": "DoSh1K",
+  "description": "default planet mod",
+  "minGameVersion": "146",
+  "version": "v0.1",
+  "java": true,
+  "hidden": false,
+  "hideBrowser": false,
+  "main": "cp.CPMod"
+}
