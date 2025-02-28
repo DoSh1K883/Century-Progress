@@ -413,7 +413,7 @@ public class CPBlocks {
             drawer = new DrawMulti(new DrawRegion("-bottom"),
                     new DrawBlurSpin("-rotator", 0.6f * 9f){{
                         blurThresh = 0.01f;
-                    }}),
+                    }},
                     new DrawDefault(),
                     new DrawParticles(){{
                         color = Color.valueOf("d4f0ff");
