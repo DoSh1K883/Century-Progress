@@ -69,7 +69,7 @@ public class CPBlocks {
     //liquid
         copperConduit, copperJunction, copperRouter, copperBridge, copperLiquidTank,
     //production
-        highFrequencyDrill, ammoniaCondenser, wallHammer,
+        highFrequencyDrill, heatDrill, ammoniaCondenser, wallHammer, nitrogenConcentrator,
     //power
         powerTower, reinforcedBattery,
     //crafting
@@ -227,18 +227,22 @@ public class CPBlocks {
             ammoPerShot = 2;
             drawer = new DrawTurret("reinforced-"){{
                 parts.add(
-                        new RegionPart("-side"){{
-                            progress = PartProgress.recoil;
-                            heatProgress = PartProgress.warmup;
-                            moveX = 1f;
-                            moveY = -2f;
-                            moveRot = -2f;
-                        }},
                         new RegionPart("-back"){{
                             progress = PartProgress.recoil;
                             heatProgress = PartProgress.warmup;
+                            heatColor = Color.valueOf("cbdbfc");
                             moveX = 3f;
                             moveY = -3f;
+                            mirror = true;
+                        }},
+                        new RegionPart("-side"){{
+                            progress = PartProgress.recoil;
+                            heatProgress = PartProgress.warmup;
+                            heatColor = Color.valueOf("cbdbfc");
+                            moveX = 1f;
+                            moveY = -2f;
+                            moveRot = -2f;
+                            mirror = true;
                         }}
                 );
             }};
@@ -379,13 +383,55 @@ public class CPBlocks {
             rotateSpeed = 12f;
             itemCapacity = 15;
 
-            consumeLiquid(Liquids.nitrogen, 0.1f).boost();
+            consumeLiquid(Liquids.nitrogen, 8f/60f).boost();
+        }};
+
+        heatDrill = new Drill("heat-drill"){{
+            requirements(Category.production, with(CPItems.calbet, 50, Items.graphite, 60, CPItems.pelner, 90));
+            health = 300;
+            tier = 5;
+            drillTime = 60 * 5;
+            liquidBoostIntensity = 1f;
+            size = 2;
+            drillEffect = Fx.vapor;
+            warmupSpeed = 0.01f;
+            rotateSpeed = 8f;
+            itemCapacity = 15;
         }};
 
         wallHammer = new BurstWallDrill("wall-hammer"){{
             requirements(Category.production, with(CPItems.calbet, 100, Items.graphite, 60, CPItems.pelner, 90));
             health = 500;
             size = 2;
+        }};
+
+        nitrogenConcentrator = new GenericCrafter("atmospheric-concentrator"){{
+            requirements(Category.production, with(CPItems.calbet, 15));
+            size = 2;
+            hasLiquids = true;
+
+            drawer = new DrawMulti(new DrawRegion("-bottom"),
+                    new DrawBlurSpin("-rotator", 0.6f * 9f){{
+                        blurThresh = 0.01f;
+                    }}),
+                    new DrawDefault(),
+                    new DrawParticles(){{
+                        color = Color.valueOf("d4f0ff");
+                        alpha = 0.6f;
+                        particleSize = 4f;
+                        particles = 10;
+                        particleRad = 12f;
+                        particleLife = 140f;
+                    }});
+
+            researchCostMultiplier = 1.1f;
+            itemCapacity = 0;
+            liquidCapacity = 12f;
+            consumePower(10f/60f);
+            ambientSound = Sounds.extractLoop;
+            ambientSoundVolume = 0.06f;
+
+            outputLiquid = new LiquidStack(Liquids.nitrogen, 3f / 60f);
         }};
 
         //power

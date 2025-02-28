@@ -87,8 +87,6 @@ public class CPUnitTypes {
             mineTier = 3;
             buildSpeed = 0.5f;
 
-            abilities.add(new UnitSpawnAbility(CPUnitTypes.mineDrone, 120f, 31f/4f, -19f/4f), new UnitSpawnAbility(CPUnitTypes.mineDrone, 120f, -31f/4f, -19f/4f));
-
             weapons.add(new RepairBeamWeapon("cp-colossus-healer"){{
                 x = 0; y = -2.5f;
                 targetBuildings = true;
@@ -103,6 +101,20 @@ public class CPUnitTypes {
 
                 bullet = new BulletType(){{
                     maxRange = 55f;
+                }};
+            }},
+            new Weapon(){{
+                x = 0; y = -2.5f;
+                recoil = 0f;
+                reload = 5f;
+                mirror = false;
+                rotate = true;
+
+                bullet = new ArtilleryBulletType(55f/4f, 5, "shell"){{
+                    lifetime = 4f;
+                    width = height = 0;
+                    collides = true;
+                    collidesTiles = true;
                 }};
             }});
         }};
